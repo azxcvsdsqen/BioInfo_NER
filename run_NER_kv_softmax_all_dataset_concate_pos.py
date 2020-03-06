@@ -728,25 +728,25 @@ def convert_examples_to_features(examples, label_list, max_seq_length, tokenizer
         assert len(word_ids) == max_word_size
         assert len(feature_ids) == max_word_size
 
-        if ex_index < 5:
-            logger.info("*** Example ***")
-            logger.info("guid: %s" % (example.guid))
-            logger.info("tokens: %s" % " ".join(
-                [str(x) for x in tokens]))
-            logger.info("input_ids: %s" % " ".join([str(x) for x in input_ids]))
-            logger.info("input_mask: %s" % " ".join([str(x) for x in input_mask]))
-            logger.info(
-                "segment_ids: %s" % " ".join([str(x) for x in segment_ids]))
-            logger.info(
-                "syntax_ids: %s" % " ".join([str(x) for x in feature_ids]))
-            logger.info(
-                "martix_0: %s" % " ".join([str(x) for x in word_matching_matrix[0]]))
-            logger.info(
-                "martix_1: %s" % " ".join([str(x) for x in word_matching_matrix[1]]))
-            logger.info(
-                "martix_2: %s" % " ".join([str(x) for x in word_matching_matrix[2]]))
-            logger.info(
-                "martix_3: %s" % " ".join([str(x) for x in word_matching_matrix[3]]))
+        # if ex_index < 5:
+        #     logger.info("*** Example ***")
+        #     logger.info("guid: %s" % (example.guid))
+        #     logger.info("tokens: %s" % " ".join(
+        #         [str(x) for x in tokens]))
+        #     logger.info("input_ids: %s" % " ".join([str(x) for x in input_ids]))
+        #     logger.info("input_mask: %s" % " ".join([str(x) for x in input_mask]))
+        #     logger.info(
+        #         "segment_ids: %s" % " ".join([str(x) for x in segment_ids]))
+        #     logger.info(
+        #         "syntax_ids: %s" % " ".join([str(x) for x in feature_ids]))
+        #     logger.info(
+        #         "martix_0: %s" % " ".join([str(x) for x in word_matching_matrix[0]]))
+        #     logger.info(
+        #         "martix_1: %s" % " ".join([str(x) for x in word_matching_matrix[1]]))
+        #     logger.info(
+        #         "martix_2: %s" % " ".join([str(x) for x in word_matching_matrix[2]]))
+        #     logger.info(
+        #         "martix_3: %s" % " ".join([str(x) for x in word_matching_matrix[3]]))
 
             # logger.info("label: %s (id = %d)" % (example.label, label_ids))
 
@@ -1197,11 +1197,11 @@ def main():
                 history['pos_f'].append(pf)
                 history['pos_oov'].append(poov)
                 logger.info("=======entity level========")
-                logger.info("Epoch: %d, word P: %f, word R: %f, word F: %f, word OOV: %f",
-                            epoch + 1, wp, wr, wf, woov)
-                logger.info("Epoch: %d,  pos P: %f,  pos R: %f,  pos F: %f,  pos OOV: %f",
-                            epoch + 1, pp, pr, pf, poov)
-                logger.info("=======entity level========")
+                # logger.info("Epoch: %d, word P: %f, word R: %f, word F: %f, word OOV: %f",
+                #             epoch + 1, wp, wr, wf, woov)
+                # logger.info("Epoch: %d,  P: %f,  R: %f,  F: %f",
+                #             epoch + 1, pp, pr, pf)
+                # logger.info("=======entity level========")
                 # the evaluation method of NER
                 report = classification_report(y_true, y_pred, digits=4)
                 with open(output_eval_file, "a") as writer:
@@ -1223,18 +1223,18 @@ def main():
                     best_poov = poov
                     num_of_no_improvement = 0
 
-                    with open(os.path.join(args.output_dir, 'POS_result.txt'), "w") as writer:
-                        writer.write("Epoch: %d, word P: %f, word R: %f, word F: %f, word OOV: %f" %
-                                     (epoch + 1, wp, wr, wf, woov))
-                        writer.write("Epoch: %d,  pos P: %f,  pos R: %f,  pos F: %f,  pos OOV: %f" %
-                                     (epoch + 1, pp, pr, pf, poov))
-                        for i in range(len(y_pred)):
-                            sentence = eval_examples[i].text_a
-                            seg_true_str, seg_pred_str = eval_sentence(y_pred[i], y_true[i], sentence, word2id)
-                            # logger.info("true: %s", seg_true_str)
-                            # logger.info("pred: %s", seg_pred_str)
-                            writer.write('True: %s\n' % seg_true_str)
-                            writer.write('Pred: %s\n\n' % seg_pred_str)
+                    # with open(os.path.join(args.output_dir, 'POS_result.txt'), "w") as writer:
+                    #     writer.write("Epoch: %d, word P: %f, word R: %f, word F: %f, word OOV: %f" %
+                    #                  (epoch + 1, wp, wr, wf, woov))
+                    #     writer.write("Epoch: %d,  pos P: %f,  pos R: %f,  pos F: %f,  pos OOV: %f" %
+                    #                  (epoch + 1, pp, pr, pf, poov))
+                    #     for i in range(len(y_pred)):
+                    #         sentence = eval_examples[i].text_a
+                    #         seg_true_str, seg_pred_str = eval_sentence(y_pred[i], y_true[i], sentence, word2id)
+                    #         # logger.info("true: %s", seg_true_str)
+                    #         # logger.info("pred: %s", seg_pred_str)
+                    #         writer.write('True: %s\n' % seg_true_str)
+                    #         writer.write('Pred: %s\n\n' % seg_pred_str)
 
                     # Save a trained model and the associated configuration
                     model_to_save = model.module if hasattr(model,
@@ -1257,12 +1257,12 @@ def main():
                 logger.info('\nEarly stop triggered at epoch %d\n' % (epoch + 1))
                 break
 
-        logger.info("\n=======best f entity level========")
-        logger.info("Epoch: %d, word P: %f, word R: %f, word F: %f, word OOV: %f",
-                    best_epoch, best_wp, best_wr, best_wf, best_woov)
-        logger.info("Epoch: %d,  pos P: %f,  pos R: %f,  pos F: %f,  pos OOV: %f",
-                    best_epoch, best_pp, best_pr, best_pf, best_poov)
-        logger.info("\n=======best f entity level========")
+        # logger.info("\n=======best f entity level========")
+        # logger.info("Epoch: %d, word P: %f, word R: %f, word F: %f, word OOV: %f",
+        #             best_epoch, best_wp, best_wr, best_wf, best_woov)
+        # logger.info("Epoch: %d,  pos P: %f,  pos R: %f,  pos F: %f,  pos OOV: %f",
+        #             best_epoch, best_pp, best_pr, best_pf, best_poov)
+        # logger.info("\n=======best f entity level========")
 
         with open(os.path.join(args.output_dir, 'history.json'), 'w', encoding='utf8') as f:
             json.dump(history, f)
