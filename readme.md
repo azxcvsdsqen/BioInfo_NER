@@ -3,7 +3,7 @@ Readme
 python=3.6
 pytorch=1.1
 
-Following [BioBERT](https://academic.oup.com/bioinformatics/article/36/4/1234/5566506), the data used in our paper can be found at https://github.com/dmis-lab/biobert#datasets (or this [link](https://drive.google.com/open?id=1OletxmPYNkz2ltOr9pyT0b0iBtUWxslh)). Please add a suffix '-EN' to each 'B' and 'I' tag to allow the evaluation code to work properly. You can see our sample data at [./data/sample_data](./data/sample_data) for reference.
+Following [BioBERT](https://academic.oup.com/bioinformatics/article/36/4/1234/5566506), the data used in our paper can be found at https://github.com/dmis-lab/biobert#datasets (or this [link](https://drive.google.com/open?id=1OletxmPYNkz2ltOr9pyT0b0iBtUWxslh)). You can see our sample data at [./data/sample_data](./data/sample_data) for reference.
 
 To run our code, you first need to set the environment up and download biobert from https://github.com/naver/biobert-pretrained and put it into biobert_pyt directory (please use our config.json file).
 
